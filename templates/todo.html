@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>todo list</title>
+    <style>
+        .hello-msg{
+            font-size: 20px;
+            color: rgb(88, 85, 85);
+            margin-right: 20px;
+        }
+        .logout{
+            font-size: 20px;
+            color: rgb(241, 231, 231);
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+    
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;" >
+        <span class="navbar-brand mb-0 h1" >To-Do App</span>
+        <span class="hello-msg">Hello,{{request.user}}</span>
+        <span class="logout"><a href="{% url 'logout' %}">Logout</a></span>
+    </nav>
+    
+    <div>
+        <ul class="list-group" style="padding-top:20px; padding-bottom:20px;">
+            {% for todo_item in all_items %}
+                <li class="list-group-item" >{{todo_item.content}}
+                    <form action="/delletTodo/{{todo_item.id}}/"
+                    style="display: inline;"
+                    method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Dellet"  class="btn btn-outline-danger">
+            
+                    </form>
+                </li>
+            {% endfor %}
+           
+        </ul>
+        <form action="/addTodo/" method="POST">
+            {% csrf_token %}
+            <input type="text" name="content">
+            <input type="submit" value="Add" class="btn btn-success">
+
+        </form>
+    </div>
+    </div>
+</body>
+</html>
